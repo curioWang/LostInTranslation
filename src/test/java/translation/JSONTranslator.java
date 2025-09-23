@@ -49,18 +49,18 @@ public class JSONTranslator implements Translator {
                 JSONObject countryData = jsonArray.getJSONObject(i);
                 String countryCode = countryData.getString("alpha3");
 
-                countryCodes.add(countryCode);
+                countryCodes.add(countryCode.toUpperCase());
 
                 // iterate through the other keys to get the information that we need
                 for (String key : countryData.keySet()) {
                     if (!key.equals("id") && !key.equals("alpha2") && !key.equals("alpha3")) {
                         String languageCode = key;
                         String v = countryData.getString(languageCode);
-                        String k = countryCode + "-" + languageCode;
+                        String k = countryCode.toUpperCase() + "-" + languageCode.toLowerCase();
                         translations.put(k, v);
 
-                        if (!languageCodes.contains(languageCode)) {
-                            languageCodes.add(languageCode);
+                        if (!languageCodes.contains(languageCode.toLowerCase())) {
+                            languageCodes.add(languageCode.toLowerCase());
                         }
                     }
                 }
@@ -82,7 +82,13 @@ public class JSONTranslator implements Translator {
     }
 
     @Override
-    public String translate(String countryCode, String languageCode) {
+    public String translate(String country, String language) {
+        LanguageCodeConverter converter1 = new LanguageCodeConverter();
+        CountryCodeConverter converter2 = new CountryCodeConverter();
+        String languageCode = language.toLowerCase();
+        String countryCode = country.toUpperCase();
+        if (!languageCodes.contains(language.toLowerCase())) {languageCode = converter1.fromLanguage(language);}
+        if (!countryCodes.contains(country.toUpperCase())) {countryCode = converter2.fromCountry(country);}
         String k = countryCode + "-" + languageCode;
         return translations.get(k);
     }

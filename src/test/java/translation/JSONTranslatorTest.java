@@ -27,6 +27,6 @@ public class JSONTranslatorTest {
 
     @Test
     public void translate() {
-        assertEquals("Canada", jsonTranslator.translate("can", "en"));
+        assertEquals("Canada", jsonTranslator.translate("can", "english"));
     }
 }

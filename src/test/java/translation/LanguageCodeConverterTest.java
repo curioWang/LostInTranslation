@@ -13,6 +13,12 @@ public class LanguageCodeConverterTest {
     }
 
     @Test
+    public void fromLanguageFR() {
+        LanguageCodeConverter converter = new LanguageCodeConverter();
+        assertEquals("fr", converter.fromLanguage("FRENCH"));
+    }
+
+    @Test
     public void fromLanguageCodeAllLoaded() {
         LanguageCodeConverter converter = new LanguageCodeConverter();
         assertEquals(184, converter.getNumLanguages());
